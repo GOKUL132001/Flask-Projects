@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">📊 Resource Utilization Report</h1>
+
+<form method="POST" class="bg-white rounded-lg shadow p-6 mb-6">
+    <div class="flex gap-4 items-end">
+        <div>
+            <label class="block font-medium mb-2">Start Date</label>
+            <input type="date" name="start_date" required 
+                   value="{{ start_date.strftime('%Y-%m-%d') if start_date else '' }}"
+                   class="border rounded px-3 py-2">
+        </div>
+        <div>
+            <label class="block font-medium mb-2">End Date</label>
+            <input type="date" name="end_date" required 
+                   value="{{ end_date.strftime('%Y-%m-%d') if end_date else '' }}"
+                   class="border rounded px-3 py-2">
+        </div>
+        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700">Generate Report</button>
+    </div>
+</form>
+
+{% if report_data %}
+<div class="bg-white rounded-lg shadow overflow-hidden">
+    <table class="w-full">
+        <thead class="bg-gray-50">
+            <tr>
+                <th class="px-6 py-3 text-left">Resource</th>
+                <th class="px-6 py-3 text-left">Type</th>
+                <th class="px-6 py-3 text-left">Total Hours Utilized</th>
+                <th class="px-6 py-3 text-left">Upcoming Bookings</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in report_data %}
+            <tr class="border-t">
+                <td class="px-6 py-4 font-medium">{{ item.resource.resource_name }}</td>
+                <td class="px-6 py-4">
+                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">{{ item.resource.resource_type }}</span>
+                </td>
+                <td class="px-6 py-4">{{ item.total_hours }} hrs</td>
+                <td class="px-6 py-4">{{ item.upcoming }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock %}

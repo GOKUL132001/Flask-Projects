@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">{{ 'Edit Event' if event else 'Add Event' }}</h1>
+
+<form method="POST" class="bg-white rounded-lg shadow p-6 max-w-lg">
+    <div class="mb-4">
+        <label class="block font-medium mb-2">Title</label>
+        <input type="text" name="title" required value="{{ event.title if event else '' }}" 
+               class="w-full border rounded px-3 py-2">
+    </div>
+    
+    <div class="mb-4">
+        <label class="block font-medium mb-2">Description</label>
+        <textarea name="description" rows="3" class="w-full border rounded px-3 py-2">{{ event.description if event else '' }}</textarea>
+    </div>
+    
+    <div class="mb-4">
+        <label class="block font-medium mb-2">Start Time</label>
+        <input type="datetime-local" name="start_time" required 
+               value="{{ event.start_time.strftime('%Y-%m-%dT%H:%M') if event else '' }}"
+               class="w-full border rounded px-3 py-2">
+    </div>
+    
+    <div class="mb-4">
+        <label class="block font-medium mb-2">End Time</label>
+        <input type="datetime-local" name="end_time" required 
+               value="{{ event.end_time.strftime('%Y-%m-%dT%H:%M') if event else '' }}"
+               class="w-full border rounded px-3 py-2">
+    </div>
+    
+    <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700">
+        {{ 'Update' if event else 'Create' }} Event
+    </button>
+    <a href="{{ url_for('events') }}" class="ml-4 text-gray-600 hover:underline">Cancel</a>
+</form>
+{% endblock %}

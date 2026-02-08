@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Dashboard</h1>
+
+<div class="grid md:grid-cols-2 gap-6">
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">📅 Upcoming Events</h2>
+        {% if events %}
+            <ul class="space-y-2">
+            {% for event in events %}
+                <li class="p-3 bg-gray-50 rounded">
+                    <strong>{{ event.title }}</strong><br>
+                    <span class="text-sm text-gray-600">{{ event.start_time.strftime('%Y-%m-%d %H:%M') }}</span>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-gray-500">No events yet.</p>
+        {% endif %}
+        <a href="{{ url_for('add_event') }}" class="mt-4 inline-block bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">+ Add Event</a>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">🔧 Resources</h2>
+        {% if resources %}
+            <ul class="space-y-2">
+            {% for resource in resources %}
+                <li class="p-3 bg-gray-50 rounded">
+                    <strong>{{ resource.resource_name }}</strong>
+                    <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded ml-2">{{ resource.resource_type }}</span>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-gray-500">No resources yet.</p>
+        {% endif %}
+        <a href="{{ url_for('add_resource') }}" class="mt-4 inline-block bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">+ Add Resource</a>
+    </div>
+</div>
+{% endblock %}
